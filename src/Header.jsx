@@ -12,10 +12,7 @@ export default function Header() {
 				<ul>
 					<li>
 						<Link to="/">
-							<img
-								alt="Carved Rock Fitness"
-								src="/images/logo.png"
-							/>
+							<img alt="Carved Rock Fitness" src="/images/logo.png" />
 						</Link>
 					</li>
 					<li>
@@ -26,6 +23,11 @@ export default function Header() {
 					<li>
 						<NavLink activeStyle={activeStyle} to="/cart">
 							Cart
+						</NavLink>
+					</li>
+					<li>
+						<NavLink activeStyle={activeStyle} to="/checkout">
+							Checkout
 						</NavLink>
 					</li>
 				</ul>
