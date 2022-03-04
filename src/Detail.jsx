@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom"
 import useFetch from "./services/useFetch"
 import Spinner from "./Spinner"
 import PageNotFound from "./PageNotFound"
+import { useCart } from "./CartContext"
 
-export default function Detail({ addToCart }) {
+export default function Detail() {
+	const { dispatch } = useCart()
 	const { id } = useParams()
 	const navigate = useNavigate()
 	const [sku, setSku] = useState("")
@@ -20,11 +22,7 @@ export default function Detail({ addToCart }) {
 			<p>{product.description}</p>
 			<p id="price">${product.price}</p>
 
-			<select
-				id="size"
-				value={sku}
-				onChange={(e) => setSku(e.target.value)}
-			>
+			<select id="size" value={sku} onChange={(e) => setSku(e.target.value)}>
 				<option value="">What Size?</option>
 				{product.skus.map((s) => (
 					<option key={s.sku} value={s.sku}>
@@ -38,7 +36,7 @@ export default function Detail({ addToCart }) {
 					disabled={!sku}
 					className="btn btn-primary"
 					onClick={() => {
-						addToCart(id, sku)
+						dispatch({ type: "add", id, sku })
 						navigate("/cart")
 					}}
 				>

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { saveShippingAddress } from "./services/shippingService"
+import { useCart } from "./CartContext"
 
 // Declaring outside component to avoid recreation on each render
 const emptyAddress = {
@@ -14,7 +15,8 @@ const STATUS = {
 	COMPLETED: "COMPLETED",
 }
 
-export default function Checkout({ cart, emptyCart }) {
+export default function Checkout() {
+	const { dispatch } = useCart()
 	const [address, setAddress] = useState(emptyAddress)
 	const [saveError, setSaveError] = useState(null)
 	const [status, setStatus] = useState(STATUS.IDLE)
@@ -45,7 +47,7 @@ export default function Checkout({ cart, emptyCart }) {
 		if (isValid) {
 			try {
 				await saveShippingAddress(address)
-				emptyCart()
+				dispatch({ type: "empty" })
 				setStatus(STATUS.COMPLETED)
 			} catch (e) {
 				setSaveError(e)
